@@ -1,25 +1,39 @@
-import React, {useState} from "react";
+import React, {useState, Component} from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import AsteroidForm from './components/asteroidForm.tsx';
 import AsteroidDetails from "./components/asteroidDetails.tsx";
 
+
+
+
+
 interface Asteroid {
   id: string;
 }
 
-function App() {
 
+
+
+ function App() {
+  
   const [asteroid, setAsteroid] = useState<Asteroid[]>([]);
   const searchAsteroid = async (asteroidId: string) => {
+    
     try {
+      
       const response = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/${asteroidId}?api_key=6e8Jy7UOqvAxp9mdIZWDTcAVYt1NZ7VlioBQtxos`);
       const data: Asteroid[]= await response.json();
       setAsteroid(data);
       console.log(data)
+      
     } catch (error) {
+      alert("Invalid Id");
+      console.log(asteroid)
+      console.log(asteroid.length)
       console.error('Error fetching asteroid details:', error);
+      return "error1";
     }
   };
 

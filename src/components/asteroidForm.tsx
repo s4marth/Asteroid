@@ -24,9 +24,10 @@ const AsteroidForm = ({ onSearch }) => {
   
     const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
-      await onSearch(asteroidId);
-
-      navigate('/asteroid-details');
+      let msg = await onSearch(asteroidId);
+    if(msg==='error1'){ navigate('/')}
+    else{navigate('/asteroid-details')}
+    //   navigate('/asteroid-details');
     };
   
     const handleRandom = async (e: FormEvent) => {
@@ -55,11 +56,12 @@ const AsteroidForm = ({ onSearch }) => {
           sx={{ boxShadow: 2 }}
           style={{backgroundColor:'white'}}
           required
+          type='number'
         />
         <div>
-          <Button type="submit" variant="contained" color="secondary" sx={{mt:2}}  >
+          <Button disabled={asteroidId.length<7} type="submit" variant="contained" color="secondary" sx={{mt:2, zIndex:1}}  >
               Search
-              <SearchIcon sx={{marginLeft:'5px'}} />
+            <SearchIcon sx={{marginLeft:'5px'}} />
           </Button>
         </div>
         <Button onClick={handleRandom} variant="contained" color="primary" sx={{mt:2}}>
