@@ -1,21 +1,26 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent,Component } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import withRouter from '../withRouter'
+//import { useNavigate } from 'react-router-dom';
 
 // interface Asteroid {
 //     id: string;
+//     name: string;
+//     nasa_jpl_url: string;
+//     designation: string;
+//     absolute_magnitude_h: string;
+//     // Add other properties as needed
 //   }
-// interface aster{
-//     asteroid: Asteroid[];
-// }
-
-const AsteroidDetails = ({ asteroid }) => {
-    const navigate = useNavigate();
-    const handleback = async (e: FormEvent) => {
+  class AsteroidDetails extends Component<{ asteroid: any }> {
+     //navigate = useNavigate();
+     handleback = async (e: FormEvent) => {
         e.preventDefault();
-       navigate("/")
+    //    this.navigate("/")
+    window.location.href="/"
       };
+     render(){
+        const { asteroid } = this.props;
 
   if (!asteroid) {
     return null;
@@ -30,11 +35,13 @@ const AsteroidDetails = ({ asteroid }) => {
       {asteroid.id ? <Typography>Designation: {asteroid.designation}</Typography> : <Typography></Typography>}
       {asteroid.id ? <Typography>Absolute_magnitude_h: {asteroid.absolute_magnitude_h}</Typography> : <Typography></Typography>}
 
-      <Button onClick={handleback}  variant="outlined" color="primary" sx={{mt:2}}>
+      <Button onClick={this.handleback}  variant="outlined" color="primary" sx={{mt:2}}>
           Go back
     </Button>
     </div>
   );
-};
+}   
+}
 
-export default AsteroidDetails;
+export default withRouter(AsteroidDetails);
+
